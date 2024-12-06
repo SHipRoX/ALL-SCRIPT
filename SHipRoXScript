@@ -97,7 +97,7 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-getgenv().cham = false
+getgenv().nameESP = false
 getgenv().lineESP = false
 getgenv().boxESP = false
 
@@ -106,13 +106,13 @@ getgenv().esp_loaded = false
 getgenv().Visibility = false
 
 Tab:AddToggle({
-	Name = "Chams Esp",
+	Name = "Name Esp",
 	Default = getgenv().Visibility,
 	Callback = function(Value)
 			if getgenv().esp_loaded == false and Value == true then
-			loadstring(game:HttpGet("https://pastebin.com/raw/az6fVGdv"))()
+			loadstring(game:HttpGet("https://pastebin.com/raw/yXhvqGGa"))()
 			end
-			getgenv().cham = Value
+			getgenv().nameESP = Value
 	end    
 })
 
