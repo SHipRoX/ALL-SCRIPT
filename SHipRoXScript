@@ -1,0 +1,146 @@
+local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
+
+local Window = OrionLib:MakeWindow({Name = "SHipRoX | Murderes Vs Sheriff Script", HidePremium = false, SaveConfig = true, ConfigFolder = "SHiRoX Hub"}) 
+
+local Tab = Window:MakeTab({
+	Name = "Main Tab",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "All Main Is Available"
+})
+
+OrionLib:MakeNotification({
+	Name = "Welcome Player",
+	Content = "Welcome to SHipRoX Script Join To my discord Server",
+	Image = "rbxassetid://4483345998",
+	Time = 8
+})
+
+Tab:AddButton({
+	Name = "Fly Gui",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/refs/heads/main/Fly%20gui%20Script"))()
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Infinite Jump",
+	Callback = function()
+InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+    if InfiniteJumpEnabled then
+        game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+    end
+end) 
+  	end
+})
+
+Tab:AddButton({
+	Name = "Players Hitbox",
+	Callback = function()
+      		    _G.HeadSize = 13
+_G.Disabled = true
+ 
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.HumanoidRootPart.Transparency = 0.7
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
+v.Character.HumanoidRootPart.Material = "Neon"
+v.Character.HumanoidRootPart.CanCollide = false
+end)
+end
+end
+end
+end)
+  	end    
+})
+
+Tab:AddTextbox({
+	Name = "Walk Speed",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end	  
+})
+
+Tab:AddTextbox({
+	Name = "High Jump",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+	end	  
+})
+
+Tab:AddTextbox({
+	Name = "Gravity",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.Gravity = Value
+	end	  
+})
+
+Tab:AddLabel("Made By SHipRoX As SHRX")
+
+local Tab = Window:MakeTab({
+	Name = "Visual",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+getgenv().cham = false
+getgenv().lineESP = false
+getgenv().boxESP = false
+
+
+getgenv().esp_loaded = false
+getgenv().Visibility = false
+
+Tab:AddToggle({
+	Name = "Chams Esp",
+	Default = getgenv().Visibility,
+	Callback = function(Value)
+			if getgenv().esp_loaded == false and Value == true then
+			loadstring(game:HttpGet("https://pastebin.com/raw/az6fVGdv"))()
+			end
+			getgenv().cham = Value
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Esp Line",
+	Default = getgenv().Visibility,
+	Callback = function(Value)
+if getgenv().esp_loaded == false and Value == true then
+		 loadstring(game:HttpGet("https://pastebin.com/raw/FxtKqS3c"))()
+			end
+			getgenv().lineESP = Value
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Esp Box",
+	Default = getgenv().Visibility,
+	Callback = function(Value)
+		if getgenv().esp_loaded == false and Value == true then
+				loadstring(game:HttpGet("https://pastebin.com/raw/eiLiNUK3"))()
+			end
+			getgenv().boxESP = Value
+	end    
+})
+
+Tab:AddLabel("All Working No Error")
+
+
+
+
+OrionLib:Init()
