@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
 
-local Window = OrionLib:MakeWindow({Name = "SHipRoX | Murderes Vs Sheriff Script", HidePremium = false, SaveConfig = true, ConfigFolder = "SHiRoX Hub"}) 
+local Window = OrionLib:MakeWindow({Name = "SHipRoX | Murderes Vs Sheriff Script", HidePremium = false, SaveConfig = true, IntroEnabled = true, IntroText = "SHipRoX Hub", ConfigFolder = "SHipRoXHub"})
 
 local Tab = Window:MakeTab({
 	Name = "Main Tab",
@@ -85,9 +85,10 @@ Tab:AddTextbox({
 	Default = "",
 	TextDisappear = true,
 	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.Gravity = Value
+		game.Workspace.Gravity = Value
 	end	  
 })
+
 
 Tab:AddLabel("Made By SHipRoX As SHRX")
 
@@ -138,7 +139,7 @@ Tab:AddToggle({
 	end    
 })
 
-Tab:AddLabel("All Working No Error")
+Tab:AddLabel("All Esp Is Working No Bug And Error")
 
 
 
