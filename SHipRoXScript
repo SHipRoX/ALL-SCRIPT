@@ -65,10 +65,9 @@ end)
 
 Tab:AddParagraph("PLAYER","Noclip High Jump Walk Speed And Gravity")
 
-Tab:AddToggle({
+Tab:AddButton({
 	Name = "Noclip",
-	Default = false,
-	Callback = function(Value)
+	Callback = function()
 		local Noclip = nil
 local Clip = nil
 
@@ -169,13 +168,6 @@ Tab:AddToggle({
 			end
 			getgenv().Visibility = Value
 	end    
-})
-
-Tab:AddButton({
-	Name = "Enable All Esp [VIP] [FREE]",
-	Callback = function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Cool-esp-17293"))()
-  	end    
 })
 Tab:AddLabel("All Esp Is Working")
 
