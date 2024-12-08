@@ -135,7 +135,6 @@ local Section = Tab:AddSection({
 getgenv().lineESP = false
 getgenv().nameESP = false
 getgenv().boxESP = false
-getgenv().distanceESP = false
 
 
 getgenv().esp_loaded = false
@@ -172,14 +171,11 @@ Tab:AddToggle({
 	end    
 })
 
-Tab:AddToggle({
-	Name = "Distance Esp",
-	Default = getgenv().distanceESP,
-	Callback = function(Value)
-		if getgenv().esp_loaded == false and Value == true then getgenv().esp_loaded = true loadstring(game:HttpGet("https://pastebin.com/raw/13rbutZe"))()
-			end
-			getgenv().Visibility = Value
-	end    
+Tab:AddButton({
+	Name = "Enable All Esp [VIP] [FREE]",
+	Callback = function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-esp-script-19414"))()
+  	end    
 })
 Tab:AddLabel("All Esp Is Working")
 
