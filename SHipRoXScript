@@ -104,9 +104,9 @@ end)
 local Tab = Window:NewTab("Credits")
 local Section = Tab:NewSection("Announcement")
 Section:NewLabel("All Main Is Working Accepted NoClip It's Working But Error")
+Section:NewLabel("Gravity Removed New Added Reset WalkSpeed And JumpPower")
 Section:NewLabel("Thanks For Using SHipRoX Hub")
 Section:NewLabel("Made By SHipRoX As SHRX")
-
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "ScreenGui"
