@@ -25,6 +25,10 @@ end
 end)
 end)
 
+Section:NewTextBox("Hitbox Size", "Working", function(txt)
+	_G.HeadSize = tonumber(txt)
+end)
+
 Section:NewButton("Infinite Jump", "Working", function()
     local InfiniteJumpEnabled = true
 game:GetService("UserInputService").JumpRequest:connect(function()
@@ -104,7 +108,6 @@ end)
 local Tab = Window:NewTab("Credits")
 local Section = Tab:NewSection("Announcement")
 Section:NewLabel("All Main Is Working Accepted NoClip It's Working But Error")
-Section:NewLabel("Gravity Removed New Added Reset WalkSpeed And JumpPower")
 Section:NewLabel("Thanks For Using SHipRoX Hub")
 Section:NewLabel("Made By SHipRoX As SHRX")
 
@@ -116,7 +119,7 @@ ScreenGui.ResetOnSpawn = false
 local Toggle = Instance.new("TextButton")
 Toggle.Name = "Toggle"
 Toggle.Parent = ScreenGui
-Toggle.BackgroundColor3 = Color3.fromRGB(1, 0, 0)
+Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Toggle.Position = UDim2.new(0, 0, 0.454706937, 0)
 Toggle.Size = UDim2.new(0, 90, 0, 38)
 Toggle.Font = Enum.Font.SourceSans
@@ -127,7 +130,7 @@ Toggle.Draggable = true
 Toggle.MouseButton1Click:connect(function()
     Library:ToggleUI()
 end)
- 
+
 local Corner = Instance.new("UICorner")
 Corner.Name = "Corner"
 Corner.Parent = Toggle
