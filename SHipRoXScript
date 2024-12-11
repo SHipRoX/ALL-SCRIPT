@@ -1,36 +1,11 @@
-local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
-local Window = OrionLib:MakeWindow({Name = "SHipRoX | MVSD SCRIPT FIXED", HidePremium = false, IntroText = "SHipRoX Hub", SaveConfig = true, ConfigFolder = "ShipRoXHub"})
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NICKISBAD/Nick-s-Modded-KAVO-Lib/main/Nick'sModdedKavoLib.lua"))()
+local Window = Library.CreateLib("SHipRoX Hub | MVSD SCRIPT UPDATED • Kavo Ui", "Synapse")
 
-local Tab = Window:MakeTab({
-	Name = "Main Tab",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("All Main Is Working And No Other Tabs")
 
-local Section = Tab:AddSection({
-	Name = "All Main Is Available"
-})
-
-OrionLib:MakeNotification({
-	Name = "WELCOME",
-	Content = "Welcome Player To SHipRox Hub",
-	Image = "rbxassetid://4483345998",
-	Time = 8
-})
-
-Tab:AddLabel("Use Full In The Game")
-
-Tab:AddButton({
-	Name = "Infinite Yield",
-	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/refs/heads/main/Fly%20gui%20Script"))()
-  	end    
-})
-
-Tab:AddButton({
-	Name = "Players Hitboxes",
-	Callback = function()
-_G.HeadSize = 11
+Section:NewButton("Hitbox Expander", "Working", function()
+    _G.HeadSize = 11
 _G.Disabled = true
 
 game:GetService('RunService').RenderStepped:connect(function()
@@ -40,7 +15,7 @@ if v.Name ~= game:GetService('Players').LocalPlayer.Name then
 pcall(function()
 v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
 v.Character.HumanoidRootPart.Transparency = 0.7
-v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
 v.Character.HumanoidRootPart.Material = "Neon"
 v.Character.HumanoidRootPart.CanCollide = false
 end)
@@ -48,27 +23,57 @@ end
 end
 end
 end)
-  	end    
-})
+end)
 
-Tab:AddButton({
-	Name = "Infinite Jump",
-	Callback = function()
-local InfiniteJumpEnabled = true
+Section:NewButton("Infinite Jump", "Working", function()
+    local InfiniteJumpEnabled = true
 game:GetService("UserInputService").JumpRequest:connect(function()
 	if InfiniteJumpEnabled then
 		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
 	end
 end)
-  	end    
-})
+end)
 
-Tab:AddParagraph("PLAYER","Noclip High Jump Walk Speed And Gravity")
+Section:NewButton("Fly Script Gui", "Working", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/refs/heads/main/Fly%20gui%20Script"))()
+end)
 
-Tab:AddButton({
-	Name = "Noclip",
-	Callback = function()
-		local Noclip = nil
+Section:NewButton("ESP", "Working", function()
+    while wait(0.5) do
+    for i, box in ipairs(workspace:GetDescendants()) do
+        if box:FindFirstChild("Humanoid") then
+            if not box:FindFirstChild("EspBox") then
+                if box ~= game.Players.LocalPlayer.Character then
+                    local esp = Instance.new("BoxHandleAdornment",box)
+                    esp.Adornee = box
+                    esp.ZIndex = 0
+                    esp.Size = Vector3.new(5, 6, 2)
+                    esp.Transparency = 0.5 --Changes Transparency 
+                    esp.Color3 = Color3.fromRGB(0,255,0) --Color change
+                    esp.AlwaysOnTop = true
+                    esp.Name = "EspBox"
+                end
+            end
+        end
+    end
+    end
+end)
+
+Section:NewTextBox("Walk Speed", "Working", function(txt)	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = txt
+end)
+
+Section:NewTextBox("Jump Power", "Working", function(txt)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = txt
+end)
+
+Section:NewButton("Reaset WalkSpeed And JumpPower", "Working", function()   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
+
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+Section:NewToggle("Noclip", "Working But Error", function(state)
+    if state then
+      local Noclip = nil
 local Clip = nil
 
 function noclip()
@@ -84,102 +89,45 @@ function noclip()
 		wait(0.21) -- basic optimization
 	end
 	Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
-end
-
-function clip()
+      end
+      
+    else
+        function clip()
 	if Noclip then Noclip:Disconnect() end
 	Clip = true
 end
 
-noclip()
-	end    
-})
+noclip() 
+    end
+end)
 
-Tab:AddTextbox({
-	Name = "Walk Speed",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-	end	  
-})
-
-Tab:AddTextbox({
-	Name = "High Jump",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
-	end	  
-})
-
-Tab:AddTextbox({
-	Name = "Gravity",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-		game.WorkSpace.Gravity = Value
-	end	  
-})
-
-local Tab = Window:MakeTab({
-	Name = "Esp Tab",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-local Section = Tab:AddSection({
-	Name = "All Esp Is Here"
-})
-
-getgenv().lineESP = false
-getgenv().nameESP = false
-getgenv().boxESP = false
+local Tab = Window:NewTab("Credits")
+local Section = Tab:NewSection("Announcement")
+Section:NewLabel("All Main Is Working Accepted NoClip It's Working But Error")
+Section:NewLabel("Thanks For Using SHipRoX Hub")
+Section:NewLabel("Made By SHipRoX As SHRX")
 
 
-getgenv().esp_loaded = false
-getgenv().Visibility = false
-
-Tab:AddToggle({
-	Name = "Esp Name",
-	Default = getgenv().nameESP,
-	Callback = function(Value)
-if getgenv().esp_loaded == false and Value == true then getgenv().esp_loaded = true
-loadstring(game:HttpGet("https://pastebin.com/raw/B8T9p40w"))()
-			end
-			getgenv().Visibility = Value
-	end    
-})
-
-Tab:AddToggle({
-	Name = "Esp Line",
-	Default = getgenv().lineESP,
-	Callback = function(Value)
-		if getgenv().esp_loaded == false and Value == true then getgenv().esploaded = true loadstring(game:HttpGet("https:https://pastebin.com/raw/nW38y7pX"))()
-			end
-			getgenv().Visibility = Value
-	end    
-})
-
-Tab:AddToggle({
-	Name = "Esp Box",
-	Default = getgenv().boxESP,
-	Callback = function(Value)
-		if getgenv().esp_loaded == false and Value == true then getgenv().esp_loaded = true loadstring(game:HttpGet("https://pastebin.com/raw/FeKvDxCe"))()
-			end
-			getgenv().Visibility = Value
-	end    
-})
-Tab:AddLabel("All Esp Is Working")
-
-local Tab = Window:MakeTab({
-	Name = "Credits",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-Tab:AddLabel("Made By SHipRoX")
-Tab:AddLabel("Thanks For Using SHipRoX Hub Script")
-Tab:AddParagraph("Announcement","Script Is Updated To You Wait For More New Added On My Script Please Don't Forget To Subscribe My Youtube Channel")
-
-
-
-OrionLib:Init()
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ScreenGui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+ 
+local Toggle = Instance.new("TextButton")
+Toggle.Name = "Toggle"
+Toggle.Parent = ScreenGui
+Toggle.BackgroundColor3 = Color3.fromRGB(1, 0, 0)
+Toggle.Position = UDim2.new(0, 0, 0.454706937, 0)
+Toggle.Size = UDim2.new(0, 90, 0, 38)
+Toggle.Font = Enum.Font.SourceSans
+Toggle.Text = "Toggle"
+Toggle.TextColor3 = Color3.fromRGB(248, 248, 248)
+Toggle.TextSize = 28.000
+Toggle.Draggable = true
+Toggle.MouseButton1Click:connect(function()
+    Library:ToggleUI()
+end)
+ 
+local Corner = Instance.new("UICorner")
+Corner.Name = "Corner"
+Corner.Parent = Toggle
