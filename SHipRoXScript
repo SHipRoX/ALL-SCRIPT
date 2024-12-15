@@ -1,5 +1,5 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NICKISBAD/Nick-s-Modded-KAVO-Lib/main/Nick'sModdedKavoLib.lua"))()
-local Window = Library.CreateLib("SHipRoX Hub | MVSD SCRIPT UPDATED • Kavo Ui", "Synapse")
+local Window = Library.CreateLib("SHipRoX Hub | MVSD SCRIPT UPDATED • Kavo Ui", "BloodTheme")
 
 local Tab = Window:NewTab("Main")
 local Section = Tab:NewSection("All Main Is Working And No Other Tabs")
@@ -75,7 +75,7 @@ Section:NewButton("Reaset WalkSpeed And JumpPower", "Working", function()   game
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
 end)
 
-Section:NewToggle("Noclip", "Working But Error", function(state)
+Section:NewToggle("Noclip [Error]", "Working But Error", function(state)
     if state then
       local Noclip = nil
 local Clip = nil
@@ -106,10 +106,12 @@ noclip()
 end)
 
 local Tab = Window:NewTab("Credits")
-local Section = Tab:NewSection("Announcement")
-Section:NewLabel("All Main Is Working Accepted NoClip It's Working But Error")
-Section:NewLabel("Thanks For Using SHipRoX Hub")
-Section:NewLabel("Made By SHipRoX As SHRX")
+local Section = Tab:NewSection("Updated")
+Section:NewLabel("Ui Color Changed")
+Section:NewLabel("NoClip Is Not Fixed At All")
+Section:NewLabel("Advance Merry Christmas")
+Section:NewLabel("Updated By SHipRoX")
+Section:NewLabel("Subscribe To My Channel Thank You")
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "ScreenGui"
@@ -134,3 +136,22 @@ end)
 local Corner = Instance.new("UICorner")
 Corner.Name = "Corner"
 Corner.Parent = Toggle
+
+wait(1)
+local function callback(text)
+    if text == "Yes" then
+    print("User said yes")
+    elseif text == "No" then
+    print("User said no")
+    end
+end
+ 
+local bindableFunction= Instance.new("BindableFunction")
+ 
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Welcome Player";
+    Text = "WELCOME TO SHIPROX HUB SCRIPT";
+    Duration = "100";
+    callbakc = bindableFunction;
+    Button1 = "Remove";
+})
