@@ -1,3 +1,21 @@
+wait(3)
+local function callback(text)
+    if text == "Yes" then
+    print("User said yes")
+    elseif text == "No" then
+    print("User said no")
+    end
+end
+
+local bindableFunction= Instance.new("BindableFunction")
+ 
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Welcome Player";
+    Text = "WELCOME TO SHIPROX HUB SCRIPT";
+    Duration = "100";
+    callbakc = bindableFunction;
+    Button1 = "Remove";
+})
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NICKISBAD/Nick-s-Modded-KAVO-Lib/main/Nick'sModdedKavoLib.lua"))()
 local Window = Library.CreateLib("SHipRoX Hub | MVSD SCRIPT UPDATED • Kavo Ui", "BloodTheme")
 
@@ -75,33 +93,34 @@ Section:NewButton("Reaset WalkSpeed And JumpPower", "Working", function()   game
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
 end)
 
-Section:NewToggle("Noclip [Error]", "Working But Error", function(state)
+Section:NewToggle("Noclip", "Working", function(state)
     if state then
-      local Noclip = nil
-local Clip = nil
+        local UserInputService = game:GetService("UserInputService")
+        local Workspace = game:GetService("Workspace")
+        local Players = game:GetService("Players")
 
-function noclip()
-	Clip = false
-	local function Nocl()
-		if Clip == false and game.Players.LocalPlayer.Character ~= nil then
-			for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-				if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
-					v.CanCollide = false
-				end
-			end
-		end
-		wait(0.21) -- basic optimization
-	end
-	Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
-      end
-      
+        local LocalPlayer = Players.LocalPlayer
+        local Character = LocalPlayer.Character
+
+        local Noclip = true
+
+        for _, Part in next, Character:GetDescendants() do
+            if Part:IsA("BasePart") then
+                Part.CanCollide = not Noclip
+            end
+        end
+
+        if Noclip then
+            print("Noclip enabled")
+        else
+            print("Noclip disabled")
+        end
     else
-        function clip()
-	if Noclip then Noclip:Disconnect() end
-	Clip = true
-end
-
-noclip() 
+        for _, Part in next, Character:GetDescendants() do
+            if Part:IsA("BasePart") then
+                Part.CanCollide = true
+            end
+        end
     end
 end)
 
@@ -136,22 +155,3 @@ end)
 local Corner = Instance.new("UICorner")
 Corner.Name = "Corner"
 Corner.Parent = Toggle
-
-wait(1)
-local function callback(text)
-    if text == "Yes" then
-    print("User said yes")
-    elseif text == "No" then
-    print("User said no")
-    end
-end
- 
-local bindableFunction= Instance.new("BindableFunction")
- 
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Welcome Player";
-    Text = "WELCOME TO SHIPROX HUB SCRIPT";
-    Duration = "100";
-    callbakc = bindableFunction;
-    Button1 = "Remove";
-})
