@@ -216,6 +216,15 @@ game.Players.PlayerRemoving:Connect(function(player)
     end
 end)
 
+-- Ensure ESP is created for players when the game starts
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        if espEnabled then
+            createESPForPlayer(player) -- Create ESP for the new character
+        end
+    end)
+end)
+
 Tab:AddTextbox({
 	Name = "Walk Speed Changer",
 	Default = "",
@@ -305,5 +314,7 @@ Tab:AddButton({
     })
   end
 })
+
+
 
 OrionLib:Init()
