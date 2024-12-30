@@ -179,12 +179,6 @@ Tab:AddToggle({
     end
 })
 
--- Cleanup when the character is removed
-game.Players.LocalPlayer.CharacterRemoving:Connect(function()
-    espEnabled = false
-    removeESP() -- Remove ESP boxes if the character is removed
-end)
-
 -- Ensure ESP is created for players when they respawn
 game.Players.PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function()
@@ -203,10 +197,22 @@ for _, player in ipairs(game.Players:GetPlayers()) do
     end)
 end
 
+-- Cleanup when the character is removed
+game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+    -- Do not remove ESP boxes here; they should persist across rounds
+end)
+
 -- Ensure ESP is removed when the script is disabled
 game.Players.LocalPlayer:GetPropertyChangedSignal("Character"):Connect(function()
     if not espEnabled then
         removeESP()
+    end
+end)
+
+-- Ensure ESP is created for players when the game starts
+game.Players.PlayerRemoving:Connect(function(player)
+    if espEnabled then
+        removeESP() -- Optionally remove ESP when a player leaves
     end
 end)
 
