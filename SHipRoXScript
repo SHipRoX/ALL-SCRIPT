@@ -109,32 +109,39 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/r
 local espEnabled = false
 local espBoxes = {} -- Table to keep track of ESP boxes
 
--- Function to create ESP
+-- Function to create ESP for a specific player
+local function createESPForPlayer(player)
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart and not humanoidRootPart:FindFirstChild("EspBox") then
+            local esp = Instance.new("BoxHandleAdornment")
+            esp.Adornee = humanoidRootPart
+            esp.ZIndex = 0
+            esp.Size = Vector3.new(4, 6, 2) -- Adjust size for better visibility
+            esp.Transparency = 0.5 -- Changes Transparency 
+
+            -- Set color based on team
+            if player.Team == game.Players.LocalPlayer.Team then
+                esp.Color3 = Color3.fromRGB(0, 255, 0) -- Green for teammates
+            else
+                esp.Color3 = Color3.fromRGB(255, 0, 0) -- Red for enemies
+            end
+            
+            esp.AlwaysOnTop = true
+            esp.Name = "EspBox"
+            esp.Parent = humanoidRootPart -- Set the parent to the humanoid root part
+            table.insert(espBoxes, esp) -- Store the ESP box in the table
+        end
+    end
+end
+
+-- Function to create ESP for all players
 local function createESP()
     while espEnabled do
         wait(0.5)
         for _, player in ipairs(game.Players:GetPlayers()) do
-            if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") then
-                local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
-                if humanoidRootPart and not humanoidRootPart:FindFirstChild("EspBox") then
-                    local esp = Instance.new("BoxHandleAdornment")
-                    esp.Adornee = humanoidRootPart
-                    esp.ZIndex = 0
-                    esp.Size = Vector3.new(4, 6, 2) -- Adjust size for better visibility
-                    esp.Transparency = 0.5 -- Changes Transparency 
-
-                    -- Set color based on team
-                    if player.Team == game.Players.LocalPlayer.Team then
-                        esp.Color3 = Color3.fromRGB(0, 255, 0) -- Green for teammates
-                    else
-                        esp.Color3 = Color3.fromRGB(255, 0, 0) -- Red for enemies
-                    end
-                    
-                    esp.AlwaysOnTop = true
-                    esp.Name = "EspBox"
-                    esp.Parent = humanoidRootPart -- Set the parent to the humanoid root part
-                    table.insert(espBoxes, esp) -- Store the ESP box in the table
-                end
+            if player ~= game.Players.LocalPlayer then
+                createESPForPlayer(player) -- Create ESP for each player
             end
         end
     end
@@ -178,12 +185,23 @@ game.Players.LocalPlayer.CharacterRemoving:Connect(function()
     removeESP() -- Remove ESP boxes if the character is removed
 end)
 
--- Ensure ESP is removed when the player returns to the lobby
-game.Players.LocalPlayer:GetPropertyChangedSignal("Team"):Connect(function()
-    if not espEnabled then
-        removeESP()
-    end
+-- Ensure ESP is created for players when they respawn
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        if espEnabled then
+            createESPForPlayer(player) -- Create ESP for the new character
+        end
+    end)
 end)
+
+-- Ensure ESP is created for existing players
+for _, player in ipairs(game.Players:GetPlayers()) do
+    player.CharacterAdded:Connect(function()
+        if espEnabled then
+            createESPForPlayer(player) -- Create ESP for the new character
+        end
+    end)
+end
 
 -- Ensure ESP is removed when the script is disabled
 game.Players.LocalPlayer:GetPropertyChangedSignal("Character"):Connect(function()
