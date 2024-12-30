@@ -1,157 +1,285 @@
-wait(3.5)
-local function callback(text)
-    if text == "Yes" then
-    print("User said yes")
-    elseif text == "No" then
-    print("User said no")
+local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
+local Window = OrionLib:MakeWindow({Name = "SHipRoX Hub | NEW YEAR UPDATE", HidePremium = false, SaveConfig = true, IntroText = "SHipRoX Hub", ConfigFolder = "SHipRoX Hub"})
+
+local Tab = Window:MakeTab({
+	Name = "Main Tab",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local Section = Tab:AddSection({
+	Name = "All Main Is Working"
+})
+OrionLib:MakeNotification({
+	Name = "Player",
+	Content = "WELCOME TO SHipRoX HUB SCRIPT MVSD",
+	Image = "rbxassetid://4483345998",
+	Time = 8
+})
+
+_G.HeadSize = 11
+_G.Disabled = true
+local hitboxConnection
+
+-- Function to update hitboxes
+local function updateHitboxes()
+    for _, player in ipairs(game:GetService('Players'):GetPlayers()) do
+        if player.Name ~= game:GetService('Players').LocalPlayer.Name then
+            pcall(function()
+                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    player.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize)
+                    player.Character.HumanoidRootPart.Transparency = 0.7
+                    player.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
+                    player.Character.HumanoidRootPart.Material = "Neon"
+                    player.Character.HumanoidRootPart.CanCollide = false
+                end
+            end)
+        end
     end
 end
 
-local bindableFunction= Instance.new("BindableFunction")
- 
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Welcome Player";
-    Text = "WELCOME TO SHIPROX HUB SCRIPT";
-    Duration = "100";
-    callbakc = bindableFunction;
-    Button1 = "Remove";
+-- Function to reset hitboxes
+local function resetHitboxes()
+    for _, player in ipairs(game:GetService('Players'):GetPlayers()) do
+        if player.Name ~= game:GetService('Players').LocalPlayer.Name then
+            pcall(function()
+                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    player.Character.HumanoidRootPart.Size = Vector3.new(2, 2, 2) -- Reset to default size
+                    player.Character.HumanoidRootPart.Transparency = 0 -- Reset transparency
+                    player.Character.HumanoidRootPart.BrickColor = BrickColor.new("Medium stone grey") -- Reset color
+                    player.Character.HumanoidRootPart.Material = "SmoothPlastic" -- Reset material
+                    player.Character.HumanoidRootPart.CanCollide = true -- Reset collision
+                end
+            end)
+        end
+    end
+end
+
+-- Function to toggle hitbox
+local function toggleHitbox(state)
+    _G.Disabled = not state
+    if state then
+        hitboxConnection = game:GetService('RunService').RenderStepped:Connect(updateHitboxes)
+    else
+        if hitboxConnection then
+            hitboxConnection:Disconnect() -- Disconnect the event when toggled off
+            hitboxConnection = nil
+        end
+        resetHitboxes() -- Ensure this is called to reset hitboxes
+    end
+end
+
+-- Create a Toggle for Hitbox
+Tab:AddToggle({
+    Name = "Enable Hitbox",
+    Default = false,
+    Save = false,
+    Flag = "hitboxToggle",
+    Callback = function(value)
+        toggleHitbox(value)
+    end
 })
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NICKISBAD/Nick-s-Modded-KAVO-Lib/main/Nick'sModdedKavoLib.lua"))()
-local Window = Library.CreateLib("SHipRoX Hub | MVSD SCRIPT UPDATED • Kavo Ui", "BloodTheme")
+Tab:AddTextbox({
+	Name = "Hitbox Size",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+   _G.HeadSize = tonumber(Value)
+	end	  
+})
 
-local Tab = Window:NewTab("Main")
-local Section = Tab:NewSection("All Main Is Working And No Other Tabs")
-
-Section:NewButton("Hitbox Expander", "Working", function()
-    _G.HeadSize = 11
-_G.Disabled = true
-
-game:GetService('RunService').RenderStepped:connect(function()
-if _G.Disabled then
-for i,v in next, game:GetService('Players'):GetPlayers() do
-if v.Name ~= game:GetService('Players').LocalPlayer.Name then
-pcall(function()
-v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
-v.Character.HumanoidRootPart.Transparency = 0.7
-v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
-v.Character.HumanoidRootPart.Material = "Neon"
-v.Character.HumanoidRootPart.CanCollide = false
-end)
-end
-end
-end
-end)
-end)
-
-Section:NewTextBox("Hitbox Size", "Working", function(txt)
-	_G.HeadSize = tonumber(txt)
-end)
-
-Section:NewButton("Infinite Jump", "Working", function()
-    local InfiniteJumpEnabled = true
+Tab:AddButton({
+	Name = "Infinite Jump",
+	Callback = function()
+      		local InfiniteJumpEnabled = true
 game:GetService("UserInputService").JumpRequest:connect(function()
 	if InfiniteJumpEnabled then
 		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
 	end
 end)
-end)
+  	end
+})
 
-Section:NewButton("Fly Script Gui", "Working", function()
+Tab:AddButton({
+	Name = "Fly Gui Script",
+	Callback = function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/refs/heads/main/Fly%20gui%20Script"))()
-end)
+  	end
+})
 
-Section:NewButton("ESP", "Working", function()
-    while wait(0.5) do
-    for i, box in ipairs(workspace:GetDescendants()) do
-        if box:FindFirstChild("Humanoid") then
-            if not box:FindFirstChild("EspBox") then
-                if box ~= game.Players.LocalPlayer.Character then
-                    local esp = Instance.new("BoxHandleAdornment",box)
-                    esp.Adornee = box
+local espEnabled = false
+local espBoxes = {} -- Table to keep track of ESP boxes
+
+-- Function to create ESP
+local function createESP()
+    while espEnabled do
+        wait(0.5)
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") then
+                local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+                if humanoidRootPart and not humanoidRootPart:FindFirstChild("EspBox") then
+                    local esp = Instance.new("BoxHandleAdornment")
+                    esp.Adornee = humanoidRootPart
                     esp.ZIndex = 0
-                    esp.Size = Vector3.new(5, 6, 2)
-                    esp.Transparency = 0.5 --Changes Transparency 
-                    esp.Color3 = Color3.fromRGB(0,255,0) --Color change
+                    esp.Size = Vector3.new(4, 6, 2) -- Adjust size for better visibility
+                    esp.Transparency = 0.5 -- Changes Transparency 
+
+                    -- Set color based on team
+                    if player.Team == game.Players.LocalPlayer.Team then
+                        esp.Color3 = Color3.fromRGB(0, 255, 0) -- Green for teammates
+                    else
+                        esp.Color3 = Color3.fromRGB(255, 0, 0) -- Red for enemies
+                    end
+                    
                     esp.AlwaysOnTop = true
                     esp.Name = "EspBox"
+                    esp.Parent = humanoidRootPart -- Set the parent to the humanoid root part
+                    table.insert(espBoxes, esp) -- Store the ESP box in the table
                 end
             end
         end
     end
+end
+
+-- Function to remove ESP
+local function removeESP()
+    for _, esp in ipairs(espBoxes) do
+        if esp and esp:IsA("BoxHandleAdornment") then
+            esp:Destroy()
+        end
+    end
+    espBoxes = {} -- Clear the table after removing
+end
+
+-- Function to toggle ESP
+local function toggleESP(state)
+    espEnabled = state
+    if state then
+        removeESP() -- Clear existing ESP boxes before starting
+        spawn(createESP) -- Start creating ESP in a new thread
+    else
+        removeESP() -- Remove existing ESP boxes
+    end
+end
+
+-- Create a Toggle for ESP
+Tab:AddToggle({
+    Name = "Enable ESP",
+    Default = false,
+    Save = true,
+    Flag = "espToggle",
+    Callback = function(value)
+        toggleESP(value)
+    end
+})
+
+-- Cleanup when the character is removed
+game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+    espEnabled = false
+    removeESP() -- Remove ESP boxes if the character is removed
+end)
+
+-- Ensure ESP is removed when the player returns to the lobby
+game.Players.LocalPlayer:GetPropertyChangedSignal("Team"):Connect(function()
+    if not espEnabled then
+        removeESP()
     end
 end)
 
-Section:NewTextBox("Walk Speed", "Working", function(txt)	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = txt
+-- Ensure ESP is removed when the script is disabled
+game.Players.LocalPlayer:GetPropertyChangedSignal("Character"):Connect(function()
+    if not espEnabled then
+        removeESP()
+    end
 end)
 
-Section:NewTextBox("Jump Power", "Working", function(txt)
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = txt
-end)
+Tab:AddTextbox({
+	Name = "Walk Speed Changer",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value) game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end	  
+})
 
-Section:NewButton("Reaset WalkSpeed And JumpPower", "Working", function()   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
+Tab:AddTextbox({
+	Name = "Jump Power Changer",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+	end	  
+})
+
+Tab:AddButton({
+	Name = "Reset Jump Power & Walk Speed",
+	Callback = function()    	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
 
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end)
+  	end    
+})
 
-Section:NewToggle("Noclip", "Working", function(state)
-    if state then
-        local UserInputService = game:GetService("UserInputService")
-        local Workspace = game:GetService("Workspace")
-        local Players = game:GetService("Players")
+local noclipEnabled = false
 
-        local LocalPlayer = Players.LocalPlayer
-        local Character = LocalPlayer.Character
+-- Function to toggle Noclip
+local function toggleNoclip(state)
+    noclipEnabled = state
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
 
-        local Noclip = true
-
-        for _, Part in next, Character:GetDescendants() do
-            if Part:IsA("BasePart") then
-                Part.CanCollide = not Noclip
+    -- Enable or disable noclip
+    if noclipEnabled then
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
             end
         end
 
-        if Noclip then
-            print("Noclip enabled")
-        else
-            print("Noclip disabled")
+        -- Noclip loop
+        while noclipEnabled do
+            wait()
+            character:TranslateBy(Vector3.new(0, 0, 0)) -- This keeps the character in place
         end
     else
-        for _, Part in next, Character:GetDescendants() do
-            if Part:IsA("BasePart") then
-                Part.CanCollide = true
+        -- Reset CanCollide to true
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = true
             end
         end
     end
-end)
+end
 
-local Tab = Window:NewTab("Credits")
-local Section = Tab:NewSection("Updated")
-Section:NewLabel("Ui Color Changed")
-Section:NewLabel("NoClip Is Working Now 👍")
-Section:NewLabel("Advance Merry Christmas")
-Section:NewLabel("Updated By SHipRoX")
-Section:NewLabel("Subscribe To My Channel Thank You")
+Tab:AddToggle({
+    Name = "Enable Noclip",
+    Default = false,
+    Save = true,
+    Flag = "noclipToggle",
+    Callback = function(value)
+        toggleNoclip(value)
+    end
+})
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "ScreenGui"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ResetOnSpawn = false
- 
-local Toggle = Instance.new("TextButton")
-Toggle.Name = "Toggle"
-Toggle.Parent = ScreenGui
-Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Toggle.Position = UDim2.new(0, 0, 0.454706937, 0)
-Toggle.Size = UDim2.new(0, 90, 0, 38)
-Toggle.Font = Enum.Font.SourceSans
-Toggle.Text = "Toggle"
-Toggle.TextColor3 = Color3.fromRGB(248, 248, 248)
-Toggle.TextSize = 28.000
-Toggle.Draggable = true
-Toggle.MouseButton1Click:connect(function()
-    Library:ToggleUI()
-end)
+local Tab = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local Section = Tab:AddSection({
+	Name = "Announcement"
+})
+Tab:AddParagraph("Announcement Update","I changed the ui to orion lib because on kavo is so many bug's and error and the Noclip is working now Happy New Year Everyone")
+Tab:AddLabel("Updated by SHipRoX Hub As SHRX SCRIPT")
+Tab:AddLabel("Subscribe To My YouTube Channel 👇")
+Tab:AddButton({
+  Name = "YouTube Channel Link",
+  Callback = function()   setclipboard("https://www.youtube.com/@SHRX-SCRIPT")
+  print("Link copied to clipboard!")
+    OrionLib:MakeNotification({
+      Name = "Link Copied!",
+      Content = "The link has been copied to your clipboard.",
+      Image = "rbxassetid://4483345998",
+      Time = 8
+    })
+  end
+})
 
-local Corner = Instance.new("UICorner")
-Corner.Name = "Corner"
-Corner.Parent = Toggle
+OrionLib:Init()
