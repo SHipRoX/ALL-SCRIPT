@@ -1,58 +1,55 @@
 local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
-local Window = OrionLib:MakeWindow({Name = "SHipRoX Hub | NEW YEAR UPDATE", HidePremium = false, SaveConfig = true, IntroText = "SHipRoX Hub", ConfigFolder = "SHipRoX Hub"})
+local Window = OrionLib:MakeWindow({Name = "SHipRoX Hub | NEW YEAR UPDATE", HidePremium = false, SaveConfig = true, IntroText = "SHipRoX Hub", ConfigFolder = "SHipRoX_Hub"})
 
 local Tab = Window:MakeTab({
-    Name = "Main Tab",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
+	Name = "Main Tab",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
-
 local Section = Tab:AddSection({
-    Name = "All Main Is Working"
+	Name = "All Main Is Working"
 })
-
 OrionLib:MakeNotification({
-    Name = "Player",
-    Content = "WELCOME TO SHipRoX HUB SCRIPT MVSD",
-    Image = "rbxassetid://4483345998",
-    Time = 8
+	Name = "Player",
+	Content = "WELCOME TO SHipRoX HUB SCRIPT MVSD",
+	Image = "rbxassetid://4483345998",
+	Time = 8
 })
 
 _G.HeadSize = 11
 _G.Disabled = true
 local hitboxConnection
-local Players = game:GetService('Players')
-local RunService = game:GetService('RunService')
-local UserInputService = game:GetService("User InputService")
 
 -- Function to update hitboxes
 local function updateHitboxes()
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player.Name ~= Players.LocalPlayer.Name and player.Character then
-            local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
-            if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize)
-                humanoidRootPart.Transparency = 0.7
-                humanoidRootPart.BrickColor = BrickColor.new("Really black")
-                humanoidRootPart.Material = "Neon"
-                humanoidRootPart.CanCollide = false
-            end
+    for _, player in ipairs(game:GetService('Players'):GetPlayers()) do
+        if player.Name ~= game:GetService('Players').LocalPlayer.Name then
+            pcall(function()
+                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    player.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize)
+                    player.Character.HumanoidRootPart.Transparency = 0.7
+                    player.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
+                    player.Character.HumanoidRootPart.Material = "Neon"
+                    player.Character.HumanoidRootPart.CanCollide = false
+                end
+            end)
         end
     end
 end
 
 -- Function to reset hitboxes
 local function resetHitboxes()
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player.Name ~= Players.LocalPlayer.Name and player.Character then
-            local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
-            if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(2, 2, 2) -- Reset to default size
-                humanoidRootPart.Transparency = 0 -- Reset transparency
-                humanoidRootPart.BrickColor = BrickColor.new("Medium stone grey") -- Reset color
-                humanoidRootPart.Material = "SmoothPlastic" -- Reset material
-                humanoidRootPart.CanCollide = true -- Reset collision
-            end
+    for _, player in ipairs(game:GetService('Players'):GetPlayers()) do
+        if player.Name ~= game:GetService('Players').LocalPlayer.Name then
+            pcall(function()
+                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    player.Character.HumanoidRootPart.Size = Vector3.new(2, 2, 2) -- Reset to default size
+                    player.Character.HumanoidRootPart.Transparency = 0 -- Reset transparency
+                    player.Character.HumanoidRootPart.BrickColor = BrickColor.new("Medium stone grey") -- Reset color
+                    player.Character.HumanoidRootPart.Material = "SmoothPlastic" -- Reset material
+                    player.Character.HumanoidRootPart.CanCollide = true -- Reset collision
+                end
+            end)
         end
     end
 end
@@ -61,10 +58,7 @@ end
 local function toggleHitbox(state)
     _G.Disabled = not state
     if state then
-        hitboxConnection = RunService.Heartbeat:Connect(function()
-            updateHitboxes()
-            wait(0.1) -- Reduce update frequency
-        end)
+        hitboxConnection = game:GetService('RunService').RenderStepped:Connect(updateHitboxes)
     else
         if hitboxConnection then
             hitboxConnection:Disconnect() -- Disconnect the event when toggled off
@@ -84,33 +78,32 @@ Tab:AddToggle({
         toggleHitbox(value)
     end
 })
-
 Tab:AddTextbox({
-    Name = "Hitbox Size",
-    Default = "",
-    TextDisappear = true,
-    Callback = function(Value)
-        _G.HeadSize = tonumber(Value) or _G.HeadSize -- Ensure it defaults to the current size if invalid
-    end
+	Name = "Hitbox Size",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+   _G.HeadSize = tonumber(Value)
+	end	  
 })
 
 Tab:AddButton({
-    Name = "Infinite Jump",
-    Callback = function()
-        local InfiniteJumpEnabled = true
-        UserInputService.JumpRequest:Connect(function()
-            if InfiniteJumpEnabled then
-                Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
-            end
-        end)
-    end
+	Name = "Infinite Jump",
+	Callback = function()
+      		local InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfiniteJumpEnabled then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end)
+  	end
 })
 
 Tab:AddButton({
-    Name = "Fly Gui Script",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/refs/heads/main/Fly%20gui%20Script"))()
-    end
+	Name = "Fly Gui Script",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/SG-SCRIPT/refs/heads/main/Fly%20gui%20Script"))()
+  	end
 })
 
 local espEnabled = false
@@ -122,13 +115,17 @@ local function createESPForPlayer(player)
         local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
         if humanoidRootPart and not humanoidRootPart:FindFirstChild("EspBox") then
             local esp = Instance.new("BoxHandleAdornment")
-            esp.Adornee = HumanoidRootPart
+            esp.Adornee = humanoidRootPart
             esp.ZIndex = 0
             esp.Size = Vector3.new(4, 6, 2) -- Adjust size for better visibility
             esp.Transparency = 0.5 -- Changes Transparency 
 
             -- Set color based on team
-            esp.Color3 = player.Team == Players.LocalPlayer.Team and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0) -- Green for teammates, Red for enemies
+            if player.Team == game.Players.LocalPlayer.Team then
+                esp.Color3 = Color3.fromRGB(0, 255, 0) -- Green for teammates
+            else
+                esp.Color3 = Color3.fromRGB(255, 0, 0) -- Red for enemies
+            end
             
             esp.AlwaysOnTop = true
             esp.Name = "EspBox"
@@ -141,9 +138,9 @@ end
 -- Function to create ESP for all players
 local function createESP()
     while espEnabled do
-        wait(0.5) -- Reduce frequency of ESP updates
-        for _, player in ipairs(Players:GetPlayers()) do
-            if player ~= Players.LocalPlayer then
+        wait(0.5)
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            if player ~= game.Players.LocalPlayer then
                 createESPForPlayer(player) -- Create ESP for each player
             end
         end
@@ -183,7 +180,7 @@ Tab:AddToggle({
 })
 
 -- Ensure ESP is created for players when they respawn
-Players.PlayerAdded:Connect(function(player)
+game.Players.PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function()
         if espEnabled then
             createESPForPlayer(player) -- Create ESP for the new character
@@ -192,7 +189,7 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 -- Ensure ESP is created for existing players
-for _, player in ipairs(Players:GetPlayers()) do
+for _, player in ipairs(game.Players:GetPlayers()) do
     player.CharacterAdded:Connect(function()
         if espEnabled then
             createESPForPlayer(player) -- Create ESP for the new character
@@ -201,26 +198,26 @@ for _, player in ipairs(Players:GetPlayers()) do
 end
 
 -- Cleanup when the character is removed
-Players.LocalPlayer.CharacterRemoving:Connect(function()
+game.Players.LocalPlayer.CharacterRemoving:Connect(function()
     -- Do not remove ESP boxes here; they should persist across rounds
 end)
 
 -- Ensure ESP is removed when the script is disabled
-Players.LocalPlayer:GetPropertyChangedSignal("Character"):Connect(function()
+game.Players.LocalPlayer:GetPropertyChangedSignal("Character"):Connect(function()
     if not espEnabled then
         removeESP()
     end
 end)
 
 -- Ensure ESP is created for players when the game starts
-Players.PlayerRemoving:Connect(function(player)
+game.Players.PlayerRemoving:Connect(function(player)
     if espEnabled then
         removeESP() -- Optionally remove ESP when a player leaves
     end
 end)
 
 -- Ensure ESP is created for players when the game starts
-Players.PlayerAdded:Connect(function(player)
+game.Players.PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function()
         if espEnabled then
             createESPForPlayer(player) -- Create ESP for the new character
@@ -229,29 +226,28 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 Tab:AddTextbox({
-    Name = "Walk Speed Changer",
-    Default = "",
-    TextDisappear = true,
-    Callback = function(Value) 
-        Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(Value) or Players.LocalPlayer.Character.Humanoid.WalkSpeed
-    end
+	Name = "Walk Speed Changer",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value) game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end	  
 })
 
 Tab:AddTextbox({
-    Name = "Jump Power Changer",
-    Default = "",
-    TextDisappear = true,
-    Callback = function(Value)
-        Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(Value) or Players.LocalPlayer.Character.Humanoid.JumpPower
-    end
+	Name = "Jump Power Changer",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+	end	  
 })
 
 Tab:AddButton({
-    Name = "Reset Jump Power & Walk Speed",
-    Callback = function()     
-        Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
-        Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-    end    
+	Name = "Reset Jump Power & Walk Speed",
+	Callback = function()    	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
+
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+  	end    
 })
 
 local noclipEnabled = false
@@ -259,7 +255,7 @@ local noclipEnabled = false
 -- Function to toggle Noclip
 local function toggleNoclip(state)
     noclipEnabled = state
-    local player = Players.LocalPlayer
+    local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
 
     -- Enable or disable noclip
@@ -298,7 +294,7 @@ Tab:AddToggle({
 -- Function to teleport to a specific player
 local function teleportToPlayer(player)
     if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
         return true
     end
     return false
@@ -308,7 +304,7 @@ end
 local function teleportToEnemyBase()
     local enemyBase = workspace:FindFirstChild("EnemyBase") -- Change this to the actual name of the enemy base in your game
     if enemyBase then
-        Players.LocalPlayer.Character.HumanoidRootPart.CFrame = enemyBase.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = enemyBase.CFrame
         OrionLib:MakeNotification({
             Name = "Teleported",
             Content = "You have been teleported to the enemy respawn base.",
@@ -335,8 +331,8 @@ local TeleportTab = Window:MakeTab({
 -- Function to update the player list
 local function updatePlayerList()
     local playerList = {}
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= Players.LocalPlayer then
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player ~= game.Players.LocalPlayer then
             table.insert(playerList, player.Name)
         end
     end
@@ -359,7 +355,7 @@ TeleportTab:AddButton({
     Name = "Teleport to Selected Player",
     Callback = function()
         if selectedPlayer then
-            local playerToTeleport = Players:FindFirstChild(selectedPlayer)
+            local playerToTeleport = game.Players:FindFirstChild(selectedPlayer)
             if playerToTeleport then
                 if teleportToPlayer(playerToTeleport) then
                     OrionLib:MakeNotification({
@@ -385,7 +381,7 @@ TeleportTab:AddButton({
                 })
             end
         else
-            OrionLib:MakeNotification ({
+            OrionLib:MakeNotification({
                 Name = "Error",
                 Content = "Please select a player from the dropdown.",
                 Image = "rbxassetid://4483345998",
@@ -419,33 +415,29 @@ TeleportTab:AddButton({
     end
 })
 
-local CreditsTab = Window:MakeTab({
-    Name = "Credits",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
+local Tab = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
-
-local Section = CreditsTab:AddSection({
-    Name = "Announcement"
+local Section = Tab:AddSection({
+	Name = "Announcement"
 })
-
-CreditsTab:AddParagraph("Announcement Update", "I changed the UI to Orion Lib because Kavo had many bugs and errors, and the Noclip is working now. Happy New Year Everyone!")
-CreditsTab:AddLabel("Updated by SHipRoX Hub As SHRX SCRIPT")
-CreditsTab:AddLabel("Subscribe To My YouTube Channel 👇")
-
-CreditsTab:AddButton({
-    Name = "YouTube Channel Link",
-    Callback = function()
-        setclipboard("https://www.youtube.com/@SHRX-SCRIPT")
-        print("Link copied to clipboard!")
-        OrionLib:MakeNotification({
-            Name = "Link Copied!",
-            Content = "The link has been copied to your clipboard.",
-            Image = "rbxassetid://4483345998",
-            Time = 8
-        })
-    end
+Tab:AddParagraph("Announcement Update","I changed the ui to orion lib because on kavo is so many bug's and error and the Noclip is working now Happy New Year Everyone")
+Tab:AddParagraph("New Added","Teleport To The Player's And Teleport To The Enemy Base Respawner")
+Tab:AddLabel("Updated by SHipRoX Hub As SHRX SCRIPT")
+Tab:AddLabel("Subscribe To My YouTube Channel 👇")
+Tab:AddButton({
+  Name = "YouTube Channel Link",
+  Callback = function()   setclipboard("https://www.youtube.com/@SHRX-SCRIPT")
+  print("Link copied to clipboard!")
+    OrionLib:MakeNotification({
+      Name = "Link Copied!",
+      Content = "The link has been copied to your clipboard.",
+      Image = "rbxassetid://4483345998",
+      Time = 8
+    })
+  end
 })
-
 
 OrionLib:Init()
