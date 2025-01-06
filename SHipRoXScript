@@ -51,7 +51,7 @@ local function updateProgressBar(progress)
 end
 
 local function intro()
-    showNotification("Starting Intro...", 2) -- Show starting notification
+    showNotification("Script Progress Please Wait", 2) -- Show starting notification
     wait(1) -- Simulate a short delay
 
     for i = 0, 100, 2 do -- Progress from 0 to 100 in steps of 2
@@ -59,7 +59,7 @@ local function intro()
         wait(0.1) -- Wait a bit to simulate loading time
     end
 
-    showNotification("Loading Complete!", 2) -- Show completion notification
+    showNotification("Progress Complete!", 2) -- Show completion notification
     wait(1) -- Wait before removing the GUI
 
     -- Remove the GUI after loading is complete
