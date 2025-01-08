@@ -73,7 +73,7 @@ local LocalPlayer = Players.LocalPlayer
 
 -- Create the main window
 local Window = OrionLib:MakeWindow({
-    Name = "SHipRoX Hub | NEW YEAR UPDATE", 
+    Name = "SHipRoX Hub | MVSD", 
     HidePremium = false, 
     SaveConfig = true, 
     IntroText = "SHipRoX Hub", 
