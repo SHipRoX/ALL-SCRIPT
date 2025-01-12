@@ -415,7 +415,6 @@ TeleportTab:AddButton({
         rejoinServer()
     end
 })
-Tab:AddLabel("New Added On Teleport Tab Rejoin Server")
 
 -- Credits Tab
 local CreditsTab = Window:MakeTab({
