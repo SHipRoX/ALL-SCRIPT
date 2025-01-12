@@ -383,6 +383,39 @@ TeleportTab:AddButton({
     end
 })
 
+-- Function to create a notification
+local function createNotification(title, message, duration)
+    OrionLib:MakeNotification({
+        Title = title,
+        Content = message,
+        Duration = duration
+    })
+end
+
+-- Function to rejoin the server
+local function rejoinServer()
+    local TeleportService = game:GetService("TeleportService")
+    local Players = game:GetService("Players")
+    local currentPlaceId = game.PlaceId
+    
+    -- Create a notification before rejoining
+    createNotification("Rejoining Server", "You are about to rejoin the server...", 5)
+    
+    -- Wait for a moment before teleporting to allow the notification to be seen
+    wait(5)
+    
+    -- Teleport the player to the current place
+    TeleportService:Teleport(currentPlaceId, Players.LocalPlayer)
+end
+
+-- Create a Button for Rejoin
+MainTab:AddButton({
+    Name = "Rejoin Server",
+    Callback = function()
+        rejoinServer()
+    end
+})
+
 -- Credits Tab
 local CreditsTab = Window:MakeTab({
     Name = "Credits",
@@ -442,7 +475,7 @@ end
 -- Clean up workspace every few seconds
 while true do
     cleanUpWorkspace()
-    wait(5) -- Adjust the wait time as needed
+    wait(1) -- Adjust the wait time as needed
 end
 
 -- Connect to player added event to optimize settings
