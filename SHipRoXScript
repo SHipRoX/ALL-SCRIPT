@@ -278,37 +278,54 @@ MainTab:AddButton({
     end
 })
 
--- Noclip Functionality
-local noclipEnabled = false
+local NoclipConnection = nil
+local isNoclipEnabled = false
+local floatName = "YourFloatPartName" -- Replace with the name of the part you want to exclude from noclip
 
-local function toggleNoclip(state)
-    noclipEnabled = state
-    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-    if noclipEnabled then
-        for _, part in ipairs(character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                part.CanCollide = false
+-- Function to enable noclip
+local function enableNoclip()
+    isNoclipEnabled = true
+    local function noclipFunction()
+        if isNoclipEnabled and game.Players.LocalPlayer.Character then
+            for _, part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if part:IsA('BasePart') and part.CanCollide and part.Name ~= floatName then
+                    part.CanCollide = false
+                end
             end
         end
+        wait(0.21) -- Basic optimization
+    end
+    NoclipConnection = game:GetService('RunService').Stepped:Connect(noclipFunction)
+end
 
-        while noclipEnabled do
-            wait()
-            character:TranslateBy(Vector3.new(0, 0, 0))
-        end
-    else
-        for _, part in ipairs(character:GetDescendants()) do
-            if part:IsA("BasePart") then
+-- Function to disable noclip
+local function disableNoclip()
+    if NoclipConnection then
+        NoclipConnection:Disconnect()
+        NoclipConnection = nil
+    end
+    isNoclipEnabled = false
+    -- Re-enable collision for all parts
+    if game.Players.LocalPlayer.Character then
+        for _, part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if part:IsA('BasePart') and part.Name ~= floatName then
                 part.CanCollide = true
             end
         end
     end
 end
 
-MainTab:AddToggle({
-    Name = "Enable Noclip",
+-- Create a toggle button for Noclip
+NoclipTab:AddToggle({
+    Name = "Toggle Noclip",
     Default = false,
-    Callback = toggleNoclip
+    Callback = function(Value)
+        if Value then
+            enableNoclip()
+        else
+            disableNoclip()
+        end
+    end
 })
 
 -- Teleport Functionality
