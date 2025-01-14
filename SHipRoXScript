@@ -84,7 +84,7 @@ local MainTab = Window:MakeTab({
     Icon = "rbxassetid://117737275277614",
     PremiumOnly = false
 })
-local Section = Tab:AddSection({
+local MainSection = Tab:AddSection({
 	Name = "All Main Now Is Fixed"
 })
 -- Notification for welcome message
@@ -330,15 +330,13 @@ MainTab:AddToggle({
     end
 })
 
-
-
 -- Teleport Functionality
 local TeleportTab = Window:MakeTab({
     Name = "Teleports",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-local Section = Tab:AddSection({
+local TeleportSection = Tab:AddSection({
 	Name = "Teleport Only Please Wait The Amazing Update"
 })
 
