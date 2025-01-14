@@ -316,7 +316,7 @@ local function disableNoclip()
 end
 
 -- Create a toggle button for Noclip
-NoclipTab:AddToggle({
+MainTab:AddToggle({
     Name = "Toggle Noclip",
     Default = false,
     Callback = function(Value)
