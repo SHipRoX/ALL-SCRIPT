@@ -84,6 +84,9 @@ local MainTab = Window:MakeTab({
     Icon = "rbxassetid://117737275277614",
     PremiumOnly = false
 })
+MainTab:AddSection({
+	Name = "All Main Is Working No Error"
+})
 
 -- Notification for welcome message
 OrionLib:MakeNotification({
@@ -333,6 +336,9 @@ local TeleportTab = Window:MakeTab({
     Name = "Teleports",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
+})
+TeleportTab:AddSection({
+	Name = "Teleport Only Wsit The Amazing Update"
 })
 
 local selectedPlayer = nil
