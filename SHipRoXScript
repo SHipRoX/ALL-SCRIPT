@@ -446,11 +446,6 @@ CreditsTab:AddButton({
 })
 
 OrionLib:Init()
-end
-
--- Run the intro
-intro()
-
 local function cleanUpWorkspace()
     for _, item in pairs(workspace:GetChildren()) do
         if item:IsA("Part") and not item:IsDescendantOf(workspace) then
@@ -484,3 +479,7 @@ game.Players.PlayerAdded:Connect(function(player)
         optimizePlayer(player)
     end)
 end)
+end
+
+-- Run the intro
+intro()
