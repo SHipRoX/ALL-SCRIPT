@@ -81,7 +81,7 @@ local Window = OrionLib:MakeWindow({
 -- Create the main tab
 local MainTab = Window:MakeTab({
     Name = "Main Tab",
-    Icon = "rbxassetid://4483345998",
+    Icon = "rbxassetid://117737275277614",
     PremiumOnly = false
 })
 
@@ -89,7 +89,7 @@ local MainTab = Window:MakeTab({
 OrionLib:MakeNotification({
     Name = "Player",
     Content = "WELCOME TO SHipRoX HUB SCRIPT MVSD",
-    Image = "rbxassetid://4483345998",
+    Image = "rbxassetid://121421108591390",
     Time = 8
 })
 
@@ -419,7 +419,7 @@ TeleportTab:AddButton({
 -- Credits Tab
 local CreditsTab = Window:MakeTab({
     Name = "Credits",
-    Icon = "rbxassetid://4483345998",
+    Icon = "rbxassetid://114282798051660",
     PremiumOnly = false
 })
 
