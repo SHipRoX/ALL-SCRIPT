@@ -338,7 +338,7 @@ local TeleportTab = Window:MakeTab({
     PremiumOnly = false
 })
 TeleportTab:AddSection({
-	Name = "Teleport Only Wsit The Amazing Update"
+	Name = "Teleport Only Wait The Amazing Update"
 })
 
 local selectedPlayer = nil
