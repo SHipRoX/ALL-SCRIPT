@@ -334,9 +334,6 @@ local TeleportTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-local Section = TeleportTab:AddSection({
-	Name = "Teleport Only Please Wait The Amazing Update"
-})
 
 local selectedPlayer = nil
 
