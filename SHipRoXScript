@@ -419,7 +419,7 @@ TeleportTab:AddButton({
 -- Credits Tab
 local CreditsTab = Window:MakeTab({
     Name = "Credits",
-    Icon = "rbxassetid://4483345998",
+    Icon = "rbxassetid://112563126210999",
     PremiumOnly = false
 })
 
