@@ -1,70 +1,4 @@
-local TweenService = game:GetService("TweenService")
-local Player = game.Players.LocalPlayer
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local ProgressBar = Instance.new("Frame")
-local ProgressText = Instance.new("TextLabel")
-local Notification = Instance.new("TextLabel")
-
--- Setup ScreenGui
-ScreenGui.Parent = Player:WaitForChild("PlayerGui")
-
--- Setup Frame
-Frame.Size = UDim2.new(0.5, 0, 0.1, 0)
-Frame.Position = UDim2.new(0.25, 0, 0.45, 0)
-Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Frame.Parent = ScreenGui
-
--- Setup ProgressBar
-ProgressBar.Size = UDim2.new(0, 0, 1, 0)
-ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-ProgressBar.Parent = Frame
-
--- Setup ProgressText
-ProgressText.Size = UDim2.new(1, 0, 1, 0)
-ProgressText.BackgroundTransparency = 1
-ProgressText.TextColor3 = Color3.fromRGB(255, 255, 255)
-ProgressText.TextScaled = true
-ProgressText.Parent = Frame
-
--- Setup Notification
-Notification.Size = UDim2.new(0.5, 0, 0.1, 0)
-Notification.Position = UDim2.new(0.25, 0, 0.3, 0)
-Notification.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Notification.TextColor3 = Color3.fromRGB(255, 255, 255)
-Notification.TextScaled = true
-Notification.BackgroundTransparency = 1
-Notification.Parent = ScreenGui
-
-local function showNotification(message, duration)
-    Notification.Text = message
-    Notification.BackgroundTransparency = 0
-    wait(duration)
-    Notification.BackgroundTransparency = 1
-end
-
-local function updateProgressBar(progress)
-    ProgressBar.Size = UDim2.new(progress, 0, 1, 0)
-    ProgressText.Text = string.format("Loading... %.2f%%", progress * 100)
-end
-
-local function intro()
-    showNotification("Script Progress Please Wait", 2) -- Show starting notification
-    wait(1) -- Simulate a short delay
-
-    for i = 0, 100, 2 do -- Progress from 0 to 100 in steps of 2
-        updateProgressBar(i / 100)
-        wait(0.1) -- Wait a bit to simulate loading time
-    end
-
-    showNotification("Progress Complete!", 2) -- Show completion notification
-    wait(1) -- Wait before removing the GUI
-
-    -- Remove the GUI after loading is complete
-    ScreenGui:Destroy()
-
-    -- Execute the external script
-    local OrionLib = loadstring(game:HttpGet('https://pastebin.com/raw/WRUyYTdY'))()
+local OrionLib = loadstring(game:HttpGet('https://pastebin.com/raw/WRUyYTdY'))()
 local Players = game:GetService('Players')
 local RunService = game:GetService('RunService')
 local LocalPlayer = Players.LocalPlayer
@@ -503,6 +437,3 @@ game.Players.PlayerAdded:Connect(function(player)
     end)
 end)
 end
-
--- Run the intro
-intro()
