@@ -436,4 +436,3 @@ game.Players.PlayerAdded:Connect(function(player)
         optimizePlayer(player)
     end)
 end)
-end
