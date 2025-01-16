@@ -87,7 +87,7 @@ end)
 -- Button 2 click event
 Button2.MouseButton1Click:Connect(function()
     ScreenGui:Destroy() -- Destroy the GUI
-    loadScript("https://raw.githubusercontent.com/SHipRoX/ALL-SCRIPT/refs/heads/main/SHipRoXScript%20Obfuscated") -- Replace with your actual script URL
+    loadScript("https://raw.githubusercontent.com/SHipRoX/ALL-SCRIPT/refs/heads/main/SHipRoXScript") -- Replace with your actual script URL
 end)
 
 -- Exit button click event
