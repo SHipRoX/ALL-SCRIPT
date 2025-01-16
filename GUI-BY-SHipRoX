@@ -1,0 +1,127 @@
+-- Create the main GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the main frame for the GUI
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 300, 0, 200) -- Width: 300, Height: 200
+Frame.Position = UDim2.new(0.5, 0, 0.4, 0) -- Center the frame horizontally and position it slightly above the center vertically
+Frame.AnchorPoint = Vector2.new(0.5, 0.5) -- Anchor point for centering
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+-- Add a background image
+local BackgroundImage = Instance.new("ImageLabel")
+BackgroundImage.Size = UDim2.new(1, 0, 1, 0) -- Cover the entire frame
+BackgroundImage.Position = UDim2.new(0, 0, 0, 0) -- Position it at the top left corner
+BackgroundImage.Image = "rbxassetid://117737275277614" -- Set the image asset ID
+BackgroundImage.BackgroundTransparency = 1 -- Make the background transparent
+BackgroundImage.Parent = Frame
+
+local FrameCorner = Instance.new("UICorner")
+FrameCorner.CornerRadius = UDim.new(0, 10)
+FrameCorner.Parent = Frame
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Position = UDim2.new(0, 0, 0, 10)
+Title.Text = "SHipRoX Hub"
+Title.TextSize = 20
+Title.TextColor3 = Color3.fromRGB(0, 255, 0)
+Title.BackgroundTransparency = 1
+Title.Parent = Frame
+
+-- Exit Button (Circular)
+local ExitButton = Instance.new("TextButton")
+ExitButton.Size = UDim2.new(0, 30, 0, 30) -- Size of the exit button
+ExitButton.Position = UDim2.new(1, -40, 0, 5) -- Position it at the top right corner
+ExitButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red color for the exit button
+ExitButton.Text = "X"
+ExitButton.TextSize = 20
+ExitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ExitButton.Parent = Frame
+
+-- Make the Exit button circular
+local ExitButtonCorner = Instance.new("UICorner")
+ExitButtonCorner.CornerRadius = UDim.new(0, 15) -- Half of the button's height for a circular shape
+ExitButtonCorner.Parent = ExitButton
+
+-- Button 1
+local Button1 = Instance.new("TextButton")
+Button1.Size = UDim2.new(0.8, 0, 0.3, 0) -- Width: 80% of the frame, Height: 30
+Button1.Position = UDim2.new(0.1, 0, 0.25, 0) -- Updated position
+Button1.Text = "Hitbox Only [MVSD]"
+Button1.TextSize = 18
+Button1.TextColor3 = Color3.fromRGB(255, 255, 255)
+Button1.Parent = Frame
+
+local Button1Corner = Instance.new("UICorner")
+Button1Corner.CornerRadius = UDim.new(0, 5)
+Button1Corner.Parent = Button1
+
+-- Button 2
+local Button2 = Instance.new("TextButton")
+Button2.Size = UDim2.new(0.8, 0, 0.3, 0) -- Width: 80% of the frame, Height: 30
+Button2.Position = UDim2.new(0.1, 0, 0.6, 0) -- Updated position
+Button2.Text = "Full Script [MVSD]"
+Button2.TextSize = 18
+Button2.TextColor3 = Color3.fromRGB(255, 255, 255)
+Button2.Parent = Frame
+
+local Button2Corner = Instance.new("UICorner")
+Button2Corner.CornerRadius = UDim.new(0, 5)
+Button2Corner.Parent = Button2
+
+-- Function to load scripts
+local function loadScript(scriptUrl)
+    loadstring(game:HttpGet(scriptUrl))()
+end
+
+-- Button 1 click event
+Button1.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy() -- Destroy the GUI
+    loadScript("https://raw.githubusercontent.com/SHipRoX/ALL-SCRIPT/refs/heads/main/SHipRoXScriptHitboxOnly") -- Replace with your actual script URL
+end)
+
+-- Button 2 click event
+Button2.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy() -- Destroy the GUI
+    loadScript("https://raw.githubusercontent.com/SHipRoX/ALL-SCRIPT/refs/heads/main/SHipRoXScript%20Obfuscated") -- Replace with your actual script URL
+end)
+
+-- Exit button click event
+ExitButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy() -- Destroy the GUI when the exit button is clicked
+end)
+
+-- Faster rainbow effect function
+local function applyFasterRainbowEffect(button)
+    local colors = {
+        Color3.fromRGB(255, 0, 0),
+        Color3.fromRGB(255, 127, 0),
+        Color3.fromRGB(255, 255, 0),
+        Color3.fromRGB(0, 255, 0),
+        Color3.fromRGB(0, 0, 255),
+        Color3.fromRGB(75, 0, 130),
+        Color3.fromRGB(148, 0, 211)
+    }
+    
+    while true do
+        for i = 1, #colors do
+            local nextIndex = (i % #colors) + 1
+            for step = 0, 1, 0.1 do -- Increased step size for faster transition
+                button.BackgroundColor3 = colors[i]:lerp(colors[nextIndex], step)
+                wait(0.0) -- Reduced wait time for faster animation
+            end
+        end
+    end
+end
+
+-- Start faster rainbow effect on buttons
+coroutine.wrap(applyFasterRainbowEffect)(Button1)
+coroutine.wrap(applyFasterRainbowEffect)(Button2)
+coroutine.wrap(applyFasterRainbowEffect)(ExitButton)
+
+-- Show the main GUI immediately
+Frame.Visible = true
