@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARAY KO PRANK</title>
+  <style>
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .popup-overlay, .video-popup, .second-video-popup, .third-video-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .popup-box, .video-box, .second-video-box {
+      background: #222;
+      padding: 2rem;
+      border: 2px solid red;
+      border-radius: 1.5rem;
+      text-align: center;
+      box-shadow: 0 0 20px red;
+      max-width: 90vw;
+    }
+
+    .popup-box h1 {
+      color: red;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      animation: shake 0.5s infinite;
+    }
+
+    .popup-box p {
+      color: yellow;
+      font-size: 1rem;
+    }
+
+    .popup-box button,
+    .proceed-button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    .popup-box button:hover,
+    .proceed-button:hover {
+      background: darkred;
+    }
+
+    .video-popup,
+    .second-video-popup,
+    .third-video-popup {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .video-popup.active,
+    .second-video-popup.active,
+    .third-video-popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .video-box,
+    .second-video-box {
+      transform: scale(0.2);
+      opacity: 0;
+      animation: popupEffect 0.5s ease forwards;
+    }
+
+    .video-popup.active .video-box,
+    .second-video-popup.active .second-video-box,
+    .third-video-popup.active .second-video-box {
+      animation: popupEffect 0.5s ease forwards;
+    }
+
+    @keyframes popupEffect {
+      0% { transform: scale(0.2); opacity: 0; }
+      60% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .video-box h2,
+    .second-video-box h2 {
+      font-size: 1.8rem;
+      color: #ff4d4d;
+      margin-top: -0.5rem;
+      margin-bottom: 0.5rem;
+      animation: cry 1s infinite alternate;
+      text-shadow: 0 0 10px #ff4d4d;
+    }
+
+    .video-box video,
+    .second-video-box video {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 12px;
+    }
+
+    .description {
+      color: yellow;
+      font-size: 1rem;
+      margin-top: 1rem;
+      animation: glowText 1.5s infinite alternate;
+      text-align: center;
+      text-shadow: 0 0 10px yellow;
+      line-height: 1.4;
+    }
+
+    .proceed-button {
+      margin-top: 1.25rem;
+      font-size: 1.1rem;
+      background: red;
+      padding: 0.75rem 1.5rem;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      25% { transform: translate(-1px, -2px) rotate(-1deg); }
+      50% { transform: translate(-3px, 0px) rotate(1deg); }
+      75% { transform: translate(3px, 2px) rotate(0deg); }
+      100% { transform: translate(1px, -1px) rotate(1deg); }
+    }
+
+    @keyframes cry {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(5px); }
+    }
+
+    @keyframes glowText {
+      0% { text-shadow: 0 0 5px yellow; }
+      100% { text-shadow: 0 0 15px orange; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- First popup -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <h1>ARAY KO! READY KANA?</h1>
+    <p>BABALA: Eto Ay Prank Lamang<br>Wag Iiyak dahil Sa Narinig Mo!</p>
+    <button onclick="startPrank()">CLICK TO VIEW!</button>
+  </div>
+</div>
+
+<!-- First Video container -->
+<div class="video-popup" id="videoPopup">
+  <div class="video-box">
+    <h2>ARAY KO! 😭</h2>
+    <video id="prankVideo" autoplay muted playsinline></video>
+    <p class="description">UNANG KAGAT BA O MAY KUMAGAT NA SA KANYA AT IKAW AY PANGALAWA LANG NA KAKAGAT SA KANYA ISIPIN MO MUNA KUNG MAGIGING KAYO BA PARA SA UNANG KAGAT WALANG MASASAKTAN!!!</p>
+    <button class="proceed-button" id="proceedBtn" style="display:none;" onclick="startSecondPrank()">PROCEED 😭!</button>
+  </div>
+</div>
+
+<!-- Second Video container -->
+<div class="second-video-popup" id="secondVideoPopup">
+  <div class="second-video-box">
+    <h2>TAMANA KUPAL!!!</h2>
+    <video id="secondVideo" autoplay muted playsinline></video>
+    <p class="description">KAYA MO PABA OHH NAHIHIRAPAN KANA! KUNG DI MO NA KAYA KALIMUTAN MO NA SYA!</p>
+    <p class="description" id="finalMessage" style="display:none;">
+      KAYA PA KUNG KAYA MO PA CLICK MO LANG YUNG BUTTON SA BABA 🫡
+    </p>
+    <button class="proceed-button" id="finalBtn" style="display:none;">
+      NEXT NA HO! 🤔
+    </button>
+  </div>
+</div>
+
+<!-- Third Video container -->
+<div class="third-video-popup" id="thirdVideoPopup">
+  <div class="second-video-box">
+    <h2>LAST NA KUYA 🤦</h2>
+    <video id="thirdVideo" autoplay muted playsinline></video>
+  </div>
+</div>
+
+<!-- Final message popup -->
+<div class="popup-overlay" id="finalMessagePopup" style="display:none;">
+  <div class="popup-box">
+    <h1 style="color:yellow; font-size:1.5rem; animation: glowText 2s infinite alternate;">
+      HAYNAKO TAPOS NARIN 😭
+    </h1>
+    <p style="font-size:1.2rem; color:orange; text-shadow:0 0 10px orange;">
+      ANO NAIYAK KABA KUNG HINDI GAGAWA ULIT AKO PARA SAYO!!!
+    </p>
+  </div>
+</div>
+
+<!-- Boom sound -->
+<audio id="boomSound" src="https://www.myinstants.com/media/sounds/vine-boom.mp3" preload="auto"></audio>
+
+<script>
+  function startPrank() {
+    document.getElementById("popup").style.display = "none";
+
+    const boom = document.getElementById("boomSound");
+    boom.volume = 1.0;
+
+    boom.play().then(() => {
+      showVideo();
+    }).catch(err => {
+      console.error("Boom sound failed:", err);
+      showVideo();
+    });
+  }
+
+  function showVideo() {
+    const videoPopup = document.getElementById("videoPopup");
+    videoPopup.classList.add("active");
+
+    const video = document.getElementById("prankVideo");
+    video.src = "https://github.com/SHipRoX/ALL-SCRIPT/raw/refs/heads/main/ssstik.io_@rndmoffcial03_1753604941693.mp4";
+    video.volume = 1.0;
+    video.muted = false;
+
+    video.play().catch(err => {
+      console.log("Autoplay error:", err);
+    });
+
+    video.onended = () => {
+      document.getElementById("proceedBtn").style.display = "inline-block";
+    };
+  }
+
+  function startSecondPrank() {
+    const boom = document.getElementById("boomSound");
+    boom.currentTime = 0;
+    boom.play().then(() => {
+      setTimeout(() => {
+        showSecondVideo();
+      }, 500);
+    }).catch(() => {
+      showSecondVideo();
+    });
+  }
+
+  function showSecondVideo() {
+    document.getElementById("secondVideoPopup").classList.add("active");
+
+    const secondVid = document.getElementById("secondVideo");
+    secondVid.src = "https://github.com/SHipRoX/ALL-SCRIPT/raw/refs/heads/main/ssstik.io_@jhynmiar_1753606979276.mp4";
+    secondVid.volume = 1.0;
+    secondVid.muted = false;
+
+    secondVid.play().catch(err => {
+      console.log("Second video error:", err);
+    });
+
+    secondVid.onended = () => {
+      document.getElementById("finalMessage").style.display = "block";
+      document.getElementById("finalBtn").style.display = "inline-block";
+    };
+  }
+
+  document.getElementById("finalBtn").onclick = () => {
+    showThirdVideo();
+  };
+
+  function showThirdVideo() {
+    const boom = document.getElementById("boomSound");
+    boom.currentTime = 0;
+    boom.play().catch(() => {});
+    
+    const thirdPopup = document.getElementById("thirdVideoPopup");
+    thirdPopup.classList.add("active");
+
+    const thirdVid = document.getElementById("thirdVideo");
+    thirdVid.src = "https://github.com/SHipRoX/ALL-SCRIPT/raw/refs/heads/main/ssstik.io_@zy_mxc_1753609470697.mp4";
+    thirdVid.volume = 1.0;
+    thirdVid.muted = false;
+
+    thirdVid.play().catch(err => {
+      console.error("Third video play failed:", err);
+    });
+
+    thirdVid.onended = () => {
+      document.getElementById("finalMessagePopup").style.display = "flex";
+    };
+  }
+</script>
+
+</body>
+</html>
